@@ -8,4 +8,4 @@ app.get("/", function(req, res){
 });
 
 
-app.listen(80, ()=> console.log("Server started at the port 80"));
+app.listen(3000, ()=> console.log("Server started at the port 3000"));
