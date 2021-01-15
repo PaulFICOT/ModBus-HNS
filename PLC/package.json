@@ -1,0 +1,15 @@
+{
+  "name": "plc",
+  "version": "1.0.0",
+  "description": "Simulator of a PLC to send and receive modbus request. (It can also display a debug view on HTTP)",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Nathan FOURRIER Paul FICOT Sacha FOLCKE Quentin BUGNON",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "modbus-serial": "^8.0.1"
+  }
+}
