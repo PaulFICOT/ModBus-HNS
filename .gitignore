@@ -93,3 +93,5 @@ typings/
 *.sqlite3
 
 ScadaServer/scada/__pycache__/
+
+*.pyc
