@@ -3,8 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <title>Page de contrôle SCADA</title>
+
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'front/style.css' %}">
 </head>
 <body>
- [WIP]
+<h1>Affichage des PLC</h1>
+{% for PLC in PLCs %}
+    <div class="plc">
+        <span class="b">Nom :</span> {{ PLC.name }}<br/>
+        <span class="b">IP Address</span> : {{ PLC.ip_address }}<br/>
+        <span class="b">Slave number</span> : {{ PLC.slave_number }}<br/>
+    </div>
+
+{% endfor %}
+
+
 </body>
 </html>
