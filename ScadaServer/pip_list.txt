@@ -1,3 +1,5 @@
 uModBus
 django-bootstrap4
-rest_framework
+djangorestframework
+markdown
+django-filter
