@@ -1,2 +1,3 @@
 uModBus
 django-bootstrap4
+rest_framework
