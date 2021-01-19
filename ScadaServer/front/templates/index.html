@@ -3,21 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <title>Page de contrôle SCADA</title>
-
+    {# Load the tag library #}
+    {% load bootstrap4 %}
+    {# Load CSS and JavaScript #}
+    {% bootstrap_css %}
+    {% bootstrap_javascript jquery='full' %}
+    {# Display django.contrib.messages as Bootstrap alerts #}
+    {% bootstrap_messages %}
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'front/style.css' %}">
 </head>
 <body>
-<h1>Affichage des PLC</h1>
-{% for PLC in PLCs %}
+<div class="container">
+{% block title %}
+    <nav class="navbar navbar-light bg-light">
+    <a class="navbar-brand" href="#">
+        <img src="{% static 'front/HNS_logo.png' %}" width="30" height="30" class="d-inline-block align-top" alt="">
+        Afficher les PLC
+    </a>
+    </nav>
+
+{% endblock %}
+
+{% block content %}
     <div class="plc">
-        <span class="b">Nom :</span> {{ PLC.name }}<br/>
-        <span class="b">IP Address</span> : {{ PLC.ip_address }}<br/>
-        <span class="b">Slave number</span> : {{ PLC.slave_number }}<br/>
+        <table class="table">
+            {% for PLC in PLCs %}
+                <tr>
+                    <td>
+                        <span class="b">Nom :</span> {{ PLC.name }}<br>
+                        <span class="b">IP Address</span> : {{ PLC.ip_address }}<br>
+                        <span class="b">Slave number</span> : {{ PLC.slave_number }}<br>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
     </div>
-
-{% endfor %}
-
-
+{% endblock %}
+</div>
 </body>
 </html>
