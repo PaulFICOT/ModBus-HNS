@@ -14,32 +14,50 @@
     <link rel="stylesheet" type="text/css" href="{% static 'front/style.css' %}">
 </head>
 <body>
-<div class="container">
-{% block title %}
-    <nav class="navbar navbar-light bg-light">
-    <a class="navbar-brand" href="#">
-        <img src="{% static 'front/HNS_logo.png' %}" width="30" height="30" class="d-inline-block align-top" alt="">
-        Afficher les PLC
-    </a>
-    </nav>
-
-{% endblock %}
-
-{% block content %}
-    <div class="plc">
-        <table class="table">
-            {% for PLC in PLCs %}
-                <tr>
-                    <td>
-                        <span class="b">Nom :</span> {{ PLC.name }}<br>
-                        <span class="b">IP Address</span> : {{ PLC.ip_address }}<br>
-                        <span class="b">Slave number</span> : {{ PLC.slave_number }}<br>
-                    </td>
-                </tr>
-            {% endfor %}
-        </table>
+<div class="dashboard" data-admin-utc-offset="0">
+    <div id="container">
+        <div id="header">
+            {% block title %}
+                <div id="branding">
+                    <h1 id="site-name">Hynesim SCADA Server</h1>
+                </div>
+                <div id="user-tools">
+                    BUGNON FICOT FOLCKE FOURRIER
+                </div>
+            {% endblock %}
+        </div>
+        <div id="content" class="colMS">
+            <div id="content-main">
+                <div class="app-auth module">
+                    {% block content %}
+                        <h1>PLC List</h1>
+                        <div id="content-main">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>IP</th>
+                                    <th>Slave</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for PLC in PLCs %}
+                                    <tr>
+                                        <td>{{ PLC.name }}</td>
+                                        <td>{{ PLC.ip_address }}</td>
+                                        <td>{{ PLC.slave_number }}</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                            <br class="clear">
+                        </div>
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+        <div id="footer"></div>
     </div>
-{% endblock %}
 </div>
 </body>
 </html>
