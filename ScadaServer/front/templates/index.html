@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Page de contrôle SCADA</title>
+    {# Load the tag library #}
+    {% load bootstrap4 %}
+    {# Load CSS and JavaScript #}
+    {% bootstrap_css %}
+    {% bootstrap_javascript jquery='full' %}
+    {# Display django.contrib.messages as Bootstrap alerts #}
+    {% bootstrap_messages %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'front/style.css' %}">
+</head>
+<body>
+<div class="dashboard" data-admin-utc-offset="0">
+    <div id="container">
+        <div id="header">
+            {% block title %}
+                <div id="branding">
+                    <h1 id="site-name">Hynesim SCADA Server</h1>
+                </div>
+                <div id="user-tools">
+                    BUGNON FICOT FOLCKE FOURRIER
+                </div>
+            {% endblock %}
+        </div>
+        <div id="content" class="colMS">
+            <div id="content-main">
+                <div class="app-auth module">
+                    {% block content %}
+                        <h1>PLC List</h1>
+                        <div id="content-main">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>IP</th>
+                                    <th>Slave</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for PLC in PLCs %}
+                                    <tr>
+                                        <td>{{ PLC.name }}</td>
+                                        <td>{{ PLC.ip_address }}</td>
+                                        <td>{{ PLC.slave_number }}</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                            <br class="clear">
+                        </div>
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+        <div id="footer"></div>
+    </div>
+</div>
+</body>
+</html>
