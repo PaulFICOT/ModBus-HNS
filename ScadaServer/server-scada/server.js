@@ -25,10 +25,5 @@ app.get('/', function(req, res) {
     });
 });
 
-// about page
-app.get('/about', function(req, res) {
-    res.render('pages/about');
-});
-
 app.listen(8080);
 console.log('Serveur web port 8080...');
