@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../partials/head'); %>
+    <link href="/style.css" rel="stylesheet" type="text/css">
+</head>
+<body class="container">
+
+    <header>
+        <%- include('../partials/header'); %>
+    </header>
+
+    <main>
+        <div class="jumbotron">
+            <h1>Tableau des variables existantes</h1>
+            <p><%= tagline %></p>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Comment</th>
+                            <th>Address</th>
+                            <th>Value</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <% valeurs.forEach(function(test) { %>
+                        <tr>
+                            <td><%=test.name%></td>
+                            <td><%=test.comment%></td>
+                            <td><%=test.address%></td>
+                            <td><%=test.value%></td>
+                        </tr>
+                        <% }); %>
+                        </tbody>
+                    </table>
+        </div>
+    </main>
+
+    <footer>
+        <%- include('../partials/footer'); %>
+    </footer>
+
+</body>
+</html>
