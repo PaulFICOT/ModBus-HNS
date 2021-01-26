@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <div >
   <h1><%- plc_name %> Values</h1>
   <div id="content-main">
@@ -46,3 +47,31 @@
     <br class="clear">
   </div>
 </div>
+=======
+<div class="app-auth module">
+    <h1><%- plc_name %> Values</h1>
+    <div id="content-main">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Comment</th>
+                <th>Address</th>
+                <th>Value</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% valeurs.forEach(function(test) { %>
+            <tr>
+                <td><%=test.name%></td>
+                <td><%=test.comment%></td>
+                <td><%=test.address%></td>
+                <td><%=test.value%></td>
+            </tr>
+            <% }); %>
+            </tbody>
+        </table>
+        <br class="clear">
+    </div>
+</div>
+>>>>>>> 438a4a2108ac88cdfcd59ef3479914225988e031
