@@ -75,7 +75,7 @@ class Measure(models.Model):
     class Meta:
         unique_together = ('PLC', 'address', 'is_bit')
 
-    PLC = models.OneToOneField(PLC, on_delete=models.CASCADE)
+    PLC = models.ForeignKey(PLC, on_delete=models.CASCADE)
     address = models.IntegerField()
     is_bit = models.BooleanField()
     name = models.CharField(max_length=255)
@@ -86,7 +86,7 @@ class Measure(models.Model):
 
 
 class MeasureValue(models.Model):
-    measure = models.OneToOneField(Measure, on_delete=models.CASCADE)
+    measure = models.ForeignKey(Measure, on_delete=models.CASCADE)
     value = models.TextField()
     value_type = models.CharField(max_length=30)
     update_time = models.DateTimeField()
