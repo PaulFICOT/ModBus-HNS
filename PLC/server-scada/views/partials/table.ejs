@@ -14,15 +14,17 @@
       </tr>
    </thead>
    <tbody>
+     <!-- Print the values of each variables into a table -->
      <% valeurs.forEach(function(test) { %>
      <tr>
        <form action="/update" method="post">
          <td contenteditable="true"><%=test.name%></td>
          <td><%=test.comment%></td>
          <td><%=test.address%></td>
-         <td value="8" contenteditable="true"><%=test.value%></td>
+         <td contenteditable="true"><%=test.value%></td>
+         <!-- Buttons to update and delete a variable -->
          <td><button class="btn btn-primary" type="submit" name="button">Update</button></td>
-         <td><button class="btn btn-danger delete-button" id="delete-<%=test.name%>" type="button" onclick="sendData({test:"<%= test.name %>"})">Delete</button></td>
+         <td><button class="btn btn-danger delete-button" id="delete-<%=test.name%>" type="button">Delete</button></td>
        </form>
 
      </tr>

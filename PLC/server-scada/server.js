@@ -54,6 +54,14 @@ app.post("/update", function(req, res) {
   res.redirect("/");
 });
 
+// post /update route
+app.post("/delete", function(req, res) {
+  //TODO: make update post function
+  console.log("delete");
+
+  res.redirect("/");
+});
+
 
 app.listen(webServPort);
 console.log("Server web port " + webServPort + "...");
