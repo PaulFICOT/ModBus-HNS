@@ -1,0 +1,46 @@
+<div >
+  <h1><%- plc_name %> Values</h1>
+  <div id="content-main">
+    <table  class="table table-condensed table-hover table-striped bootgrid-table" width="60%" cellspacing="0">
+   <thead>
+      <tr>
+        <th>Name</th>
+        <th>Comment</th>
+        <th>Address</th>
+        <th>Value</th>
+        <th></th>
+        <th></th>
+
+      </tr>
+   </thead>
+   <tbody>
+     <% valeurs.forEach(function(test) { %>
+     <tr>
+       <form action="/update" method="post">
+         <td contenteditable="true"><%=test.name%></td>
+         <td><%=test.comment%></td>
+         <td><%=test.address%></td>
+         <td value="8" contenteditable="true"><%=test.value%></td>
+         <td><button class="btn btn-primary" type="submit" name="button">Update</button></td>
+         <td><button class="btn btn-danger delete-button" id="delete-<%=test.name%>" type="button" onclick="sendData({test:"<%= test.name %>"})">Delete</button></td>
+       </form>
+
+     </tr>
+     <% }); %>
+     <form action="/add" method="post">
+       <tr>
+       <td ><input type="text" name="name" ></td>
+       <td ><input type="text" name="comment" ></td>
+       <td ><input type="text" name="address" ></td>
+       <td ><input type="text" name="value" ></td>
+       <td><button class="btn btn-primary" type="submit" name="button">Add</button></td>
+       </tr>
+     </form>
+
+
+
+   </tbody>
+
+    <br class="clear">
+  </div>
+</div>
