@@ -20,6 +20,8 @@ from front import views
 
 router = routers.DefaultRouter()
 router.register(r'plc', views.PLCViewSet)
+router.register(r'measure', views.MeasureViewSet)
+router.register(r'measurevalue', views.MeasureValueViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
