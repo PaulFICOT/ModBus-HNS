@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SCADA {{ PLC.name }} logs</title>
+    {# Load the tag library #}
+    {% load bootstrap4 %}
+    {# Load CSS and JavaScript #}
+    {% bootstrap_css %}
+    {% bootstrap_javascript jquery='full' %}
+    {# Display django.contrib.messages as Bootstrap alerts #}
+    {% bootstrap_messages %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'front/style.css' %}">
+</head>
+<body>
+<div class="dashboard" data-admin-utc-offset="0">
+    <div id="container">
+        <div id="header">
+            {% block title %}
+                <div id="branding">
+                    <h1 id="site-name">
+                        <a href="http://localhost:8000/">
+                            Hynesim SCADA Server
+                        </a>
+                    </h1>
+                </div>
+                <div id="user-tools">
+                    BUGNON FICOT FOLCKE FOURRIER
+                </div>
+            {% endblock %}
+        </div>
+        <div id="content" class="colMS">
+            <div id="content-main">
+                <div class="app-auth module">
+                    {% block content %}
+                        {% for MEASURE in MEASURES %}
+                        <h1>{{ MEASURE.name }} logs</h1>
+                        <div id="content-main">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>Value</th>
+                                    <th>Value type</th>
+                                    <th>Update time</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for VALUE in VALUES %}
+                                    {% if VALUE.measure.id == MEASURE.id %}
+                                    <tr>
+                                        <td>{{ VALUE.value }}</td>
+                                        <td>{{ VALUE.value_type }}</td>
+                                        <td>{{ VALUE.update_time }}</td>
+                                    </tr>
+                                    {% endif %}
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                            <br class="clear">
+                        </div>
+                        {% endfor %}
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+        <div id="footer"></div>
+    </div>
+</div>
+</body>
+</html>

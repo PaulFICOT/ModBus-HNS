@@ -11,11 +11,25 @@ class PLCViewSet(viewsets.ModelViewSet):
     serializer_class = PLCSerializer
 
 
-def index(request):
-    PLCs = PLC.objects.all()
+def measures(request, id):
+    plc = PLC.objects.get(id=id)
+    measures = Measure.objects.filter(PLC=plc)
+    values = MeasureValue.objects.filter(measure__PLC=id)
 
     context = {
-        'PLCs': PLCs
+        'PLC': plc,
+        'MEASURES': measures,
+        'VALUES': values
+    }
+
+    return render(request, 'measures.html', context)
+
+
+def index(request):
+    plcs = PLC.objects.all()
+
+    context = {
+        'PLCs': plcs
     }
 
     return render(request, 'index.html', context)
