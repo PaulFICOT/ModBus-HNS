@@ -26,13 +26,15 @@ def measures(request, id):
     measures = Measure.objects.filter(PLC=plc)
     values = MeasureValue.objects.filter(measure__PLC=id)
 
-        'PLC': plc,
     context = {
-        'VALUES': values
+        'PLC': plc,
+        'VALUES': values,
         'MEASURES': measures,
 
     }
     return render(request, 'measures.html', context)
+
+
 def index(request):
     plcs = PLC.objects.all()
 
