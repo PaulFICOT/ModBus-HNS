@@ -11,6 +11,16 @@ class PLCViewSet(viewsets.ModelViewSet):
     serializer_class = PLCSerializer
 
 
+class MeasureViewSet(viewsets.ModelViewSet):
+    queryset = Measure.objects.all()
+    serializer_class = MeasureSerializer
+
+
+class MeasureValueViewSet(viewsets.ModelViewSet):
+    queryset = MeasureValue.objects.all()
+    serializer_class = MeasureValueSerializer
+
+
 def index(request):
     PLCs = PLC.objects.all()
 
