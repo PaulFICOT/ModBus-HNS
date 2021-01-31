@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <div >
   <h1><%- plc_name %> Values</h1>
   <div id="content-main">
@@ -16,21 +15,27 @@
    </thead>
    <tbody>
      <!-- Print the values of each variables into a table -->
-     <% valeurs.forEach(function(test) { %>
-     <tr>
+     <% datas.forEach(function(data) { %>
        <form action="/update" method="post">
-         <td contenteditable="true"><%=test.name%></td>
-         <td><%=test.comment%></td>
-         <td><%=test.address%></td>
-         <td contenteditable="true"><%=test.value%></td>
-         <!-- Buttons to update and delete a variable -->
-         <td><button class="btn btn-primary" type="submit" name="button">Update</button></td>
-         <td><button class="btn btn-danger delete-button" id="delete-<%=test.name%>" type="button">Delete</button></td>
+        <input type="hidden" name="variableName" value="<%=data.name%>">
+        <tr>
+            <td><input class="deguised-input" type="text" name="newName" value="<%=data.name%>"></td>
+            <td><input class="deguised-input" type="text" name="newComment" value="<%=data.comment%>"></td>
+            <td><input class="deguised-input" type="text" name="newAddress" value="<%=data.address%>"></td>
+            <td><input class="deguised-input" type="text" name="newValue" value="<%=data.value%>"></td>
+            <!-- Buttons to update and delete a variable -->
+            <td><button class="btn btn-primary" type="submit" name="button">Update</button></td>
+          </form>
+          <form action="/delete" method="post">
+              <input type="hidden" name="variableName" value="<%=data.name%>">
+              <td><button class="btn btn-danger" id="delete-<%=data.name%>" type="submit">Delete</button></td>
+        </tr>
+
        </form>
 
-     </tr>
      <% }); %>
      <form action="/add" method="post">
+      <!-- TODO: Validation of the form -->
        <tr>
        <td ><input type="text" name="name" ></td>
        <td ><input type="text" name="comment" ></td>
@@ -47,31 +52,3 @@
     <br class="clear">
   </div>
 </div>
-=======
-<div class="app-auth module">
-    <h1><%- plc_name %> Values</h1>
-    <div id="content-main">
-        <table class="table">
-            <thead>
-            <tr>
-                <th>Name</th>
-                <th>Comment</th>
-                <th>Address</th>
-                <th>Value</th>
-            </tr>
-            </thead>
-            <tbody>
-            <% valeurs.forEach(function(test) { %>
-            <tr>
-                <td><%=test.name%></td>
-                <td><%=test.comment%></td>
-                <td><%=test.address%></td>
-                <td><%=test.value%></td>
-            </tr>
-            <% }); %>
-            </tbody>
-        </table>
-        <br class="clear">
-    </div>
-</div>
->>>>>>> 438a4a2108ac88cdfcd59ef3479914225988e031
