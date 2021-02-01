@@ -23,6 +23,7 @@
             <td><input class="deguised-input" type="text" name="newComment" value="<%=data.comment%>"></td>
             <td><input class="deguised-input" type="text" name="newAddress" value="<%=data.address%>"></td>
             <td><input class="deguised-input" type="text" name="newValue" value="<%=data.value%>"></td>
+            
             <!-- Buttons to update and delete a variable -->
             <td><button class="btn btn-primary" type="submit" name="button">Update</button></td>
           </form>
@@ -37,10 +38,10 @@
      <form action="/add" method="post">
       <!-- TODO: Validation of the form -->
        <tr>
-       <td ><input type="text" name="name" ></td>
-       <td ><input type="text" name="comment" ></td>
-       <td ><input type="text" name="address" ></td>
-       <td ><input type="text" name="value" ></td>
+       <td ><input type="text" class="form-control" name="name" ></td>
+       <td ><input type="text" class="form-control" name="comment" ></td>
+       <td ><input type="text" class="form-control" name="address" ></td>
+       <td ></td>
        <td><button class="btn btn-primary" type="submit" name="button">Add</button></td>
        </tr>
      </form>

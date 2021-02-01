@@ -34,58 +34,20 @@ var Bits = [{
   comment: "Projet",
   address: "0",
   value: true
-},{
-  name: 'Ma variable1',
-  comment: "Projet",
-  address: "1",
-  value: true
-},{
-  name: 'Ma variable1',
-  comment: "Projet",
-  address: "2",
-  value: true
-},{
-  name: 'Ma variable1',
-  comment: "Projet",
-  address: "3",
-  value: true
-},
-];
+}];
 
 
 // Home page get
 app.get('/', function(req, res) {
 
-  res.redirect("/words");
-});
-
-
-app.get('/words', function(req, res) {
-
   Words.forEach(function(variable){
     //TODO: make the formula for each address types
       variable.value = modbusServer.server.holding.readUInt16BE(parseInt(variable.address)*2+2)
   })
-  console.log(modbusServer.server.discrete);
+
   res.render('pages/index', {
-    plc_name: plc_name +" Words",
+    plc_name: plc_name,
     datas: Words
-  });
-});
-
-
-app.get('/bits', function(req, res) {
-
-  for(i=0; i<100; i++){console.log(modbusServer.server.coils.readUInt8(i));}
-  Bits.forEach(function(variable){
-    //TODO: make the formula for each address types
-    
-      variable.value = modbusServer.server.holding.readUInt8(parseInt(variable.address))
-  })
-
-  res.render('pages/index', {
-    plc_name: plc_name +" Bits",
-    datas: Bits
   });
 });
 
@@ -95,6 +57,7 @@ app.post("/add", function(req, res) {
     name: req.body.name,
     comment: req.body.comment,
     address: req.body.address,
+    value:
   };
   Words.push(variable);
   res.redirect("/");
@@ -141,3 +104,10 @@ exports.webServPort = webServPort;
 exports.plc_name = plc_name;
 exports.Words = Words;
 
+exports.updatewordValue = function(address, value){
+  Words.forEach(function(variable){
+    if(variable.address == address){
+      variable.value = value;
+    }
+  });
+};

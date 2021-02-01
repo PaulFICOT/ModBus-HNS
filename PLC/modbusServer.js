@@ -1,5 +1,4 @@
 'use strict'
-const webServer = require(__dirname+"/webServer.js");
 
 const net = require('net')
 const modbus = require('jsmodbus')
