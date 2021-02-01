@@ -1,15 +1,11 @@
 {
-  "name": "plc",
-  "version": "1.0.0",
-  "description": "PlC simulator to send and receive modbus requests. (It can also provide a debug web interface)",
-  "main": "app.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "Nathan FOURRIER - Quentin BUGNON - Sacha FOLCKE - Paul FICOT",
-  "license": "ISC",
+  "name": "node-ejs",
+  "main": "server.js",
   "dependencies": {
+    "ejs": "^3.1.5",
     "express": "^4.17.1",
-    "jsmodbus": "^4.0.5"
+    "jsmodbus": "^4.0.5",
+    "lodash": "^4.17.20",
+    "net": "^1.0.2"
   }
 }
