@@ -1,137 +1,143 @@
-//Imports
-const modbusServer = require(__dirname + "/modbusClient.js");
+// Conf vars
+const webServPort = 8080;
+const plc_name = "PLC_0";
 
-const express = require('express');
+//Imports
+const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 const _ = require("lodash");
+const { v1: uuidv1 } = require("uuid");
 
+// variables
+var Words = [];
+var Bits = [];
 
+for (let i = 0; i < 10; i++) {
+  const word = {
+    _uid: uuidv1(),
+    name: "Ma variable " + i,
+    comment: "Commentaire " + i,
+    address: i,
+  };
+  Words.push(word);
+
+  const bit = {
+    _uid: uuidv1(),
+    name: "Ma variable " + i,
+    comment: "Commentaire " + i,
+    address: i,
+  };
+  Bits.push(bit);
+}
+const modbusServer = require(__dirname + "/modbusClient.js");
 
 // set the app
-app.set('view engine', 'ejs');
-app.use(express.static(__dirname + '/static'));
-app.use(bodyParser.urlencoded({
-  extended: true
-}));
-
-
-// Conf vars
-const webServPort = 5000;
-const plc_name = "PLC_0";
-
-var Words = [{
-  name: 'Ma variable1',
-  comment: "Projet",
-  address: "0",
-  value: 18
-}];
-
-var Bits = [{
-  name: 'Ma variable1',
-  comment: "Projet",
-  address: "0",
-  value: true
-}, {
-  name: 'Ma variable1',
-  comment: "Projet",
-  address: "1",
-  value: true
-}, {
-  name: 'Ma variable1',
-  comment: "Projet",
-  address: "2",
-  value: true
-}, {
-  name: 'Ma variable1',
-  comment: "Projet",
-  address: "3",
-  value: true
-},
-];
-
+app.set("view engine", "ejs");
+app.use(express.static(__dirname + "/static"));
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+);
 
 // Home page get
-app.get('/', function (req, res) {
-
-  res.redirect("/words");
+app.get("/", function (req, res) {
+  res.redirect("/Words");
 });
 
+app.get("/Words", async function (req, res) {
 
-app.get('/words', async function (req, res) {
-
-  Words.forEach(word => {
-    if(word.value == undefined){
-      res.redirect("/words");
-    }
+  res.render("pages/index", {
+    plc_name: plc_name,
+    dataType: "Words",
+    prefix: "%MW",
+    datas: Words,
   });
-  res.render('pages/index', {
-    plc_name: plc_name + " Words",
-    datas: Words
-  });
-})
+});
 
-
-
-app.get('/bits', function (req, res) {
-
-  Bits.forEach(bit => {
-    if(bit.value == undefined){
-      res.redirect("/bits");
-    }
-  });
-  res.render('pages/index', {
-    plc_name: plc_name + " Bits",
-    datas: Bits
+app.get("/Bits", function (req, res) {
+ 
+  res.render("pages/index", {
+    plc_name: plc_name,
+    dataType: "Bits",
+    prefix: "%M",
+    datas: Bits,
   });
 });
 
 // post /add route
-app.post("/add", function (req, res) {
+app.post("/add/:dataType", function (req, res) {
+  
+  const dataType = req.params.dataType;
   const variable = {
+    _uid: uuidv1(),
     name: req.body.name,
     comment: req.body.comment,
     address: req.body.address,
   };
-  Words.push(variable);
-  res.redirect("/");
+  if (dataType == "Words") {
+    Words.push(variable);
+  }else {
+    Bits.push(variable);
+  }
+  res.redirect("/"+dataType);
+
 });
 
-
 // post /update route
-app.post("/update", function (req, res) {
-  //TODO: make update post function
-  console.log(req.body);
+app.post("/update/:dataType", function (req, res) {
+  
+  const dataType = req.params.dataType;
+  
   const newVar = {
+    _uid: req.body._uid,
     name: req.body.newName,
     comment: req.body.newComment,
     address: req.body.newAddress,
-    value: req.body.newValue
+    value: req.body.newValue,
   };
-  // modbusServer.writeRegister(newVar.address,newVar.value);
-  Words.forEach(function (variable, index) {
 
-    if (variable.name == req.body.variableName) {
-      Words[index] = newVar;
-    }
-  });
+  
+  if ( dataType == "Words") {
+    modbusServer.writeRegister(newVar.address,parseInt(newVar.value));
+    Words.forEach(function (variable, index) {
+      if (variable._uid == req.body._uid) {
+        Words[index] = newVar;
+      }
+    });
+  }else {
+    modbusServer.writeBit(newVar.address,(newVar.value=="1"));
+    Bits.forEach(function (variable, index) {
+      if (variable._uid == req.body._uid) {
+        Bits[index] = newVar;
+      }
+    });
+  }
+ 
+  
 
-  res.redirect("/");
+  res.redirect("/"+dataType);
 });
 
-// post /update route
-app.post("/delete", function (req, res) {
-  const varToDelete = req.body.variableName;
-  _.remove(Words, variable => variable.name == varToDelete);
+// post /delete route
+app.post("/delete/:dataType", function (req, res) {
+  const dataType = req.params.dataType;
+  const varToDelete = req.body._uid;
+  
 
-  res.redirect("/");
+  if (req.params.dataType == "Words") {
+    _.remove(Words, (variable) => variable._uid == varToDelete);
+  }else {
+    _.remove(Bits, (variable) => variable._uid == varToDelete);
+  }
+
+  res.redirect("/"+dataType);
+
 });
-
 
 app.listen(webServPort);
 console.log("Server web started on port:  " + webServPort + "...");
-
-
 
 exports.app = app;
 exports.webServPort = webServPort;
@@ -139,4 +145,3 @@ exports.plc_name = plc_name;
 
 exports.Words = Words;
 exports.Bits = Bits;
-

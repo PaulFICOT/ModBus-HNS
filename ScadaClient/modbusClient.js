@@ -1,28 +1,119 @@
-var ModbusRTU = require("modbus-serial");
-var client = new ModbusRTU();
-const webServer = require(__dirname+"/webServer.js");
+"use strict";
 
- 
-// open connection to a tcp line
-client.connectTCP("127.0.0.1", { port: 8502 });
-client.setID(1);
- 
-// read the values of 10 registers starting at address 0
-// on device number 1. and log the values to the console.
-setInterval(function() {
-  webServer.Words.forEach(word => {
-    client.readHoldingRegisters(word.address, 1, function(err, data) {
-      word.value  = data.data;
-  });
+const modbus = require("jsmodbus");
+const net = require("net");
 
-  });
-  webServer.Bits.forEach(bit => {
-    client.readCoils(bit.address, 1, function(err, data) {
-      bit.value  = data.data[0];
-  });
+const webServer = require(__dirname + "/webServer.js");
 
-  });
+const options = {
+  host: "127.0.0.1",
+  port: "8502",
+};
+
+
+function makeRequest(callback){
+  const socket = new net.Socket();
+  const client = new modbus.client.TCP(socket);
+  callback(socket, client);
   
-}, 100);
 
-exports.writeRegister = client.writeRegister;
+  socket.on("error", console.error);
+  socket.connect(options);
+}
+
+function readRegister(address, wordIndex) {
+  
+  makeRequest(function(socket,client){
+    socket.on("connect", function () {
+      client
+        .readHoldingRegisters(address, 1)
+        .then(function (resp) {
+          const value = resp.response._body.valuesAsArray[0];
+          webServer.Words[wordIndex].value = value;
+          socket.end();
+        })
+        .catch(function () {
+          console.error(
+            require("util").inspect(arguments, {
+              depth: null,
+            })
+          );
+          socket.end();
+        });
+    });
+  });
+
+}
+
+function readBits(address, bitIndex) {
+  
+  makeRequest(function(socket,client){
+    socket.on("connect", function () {
+      client
+        .readCoils(address, 1)
+        .then(function (resp) {
+          const value = resp.response._body.valuesAsArray[0];
+          webServer.Bits[bitIndex].value = value;
+          socket.end();
+        })
+        .catch(function () {
+          console.error(
+            require("util").inspect(arguments, {
+              depth: null,
+            })
+          );
+          socket.end();
+        });
+    });
+  });
+
+}
+
+function writeRegister(address, value) {
+  
+  makeRequest(function(socket,client){
+    socket.on('connect', function () {
+      client.writeSingleRegister(address, value)
+        .then(function (resp) {
+          socket.end()
+        }).catch(function () {
+          console.error(arguments)
+          socket.end()
+        })
+    })
+  });
+
+}
+
+function writeBit(address, value) {
+  
+  makeRequest(function(socket,client){
+    socket.on('connect', function () {
+      client.writeSingleCoil(address, value)
+        .then(function (resp) {
+          socket.end()
+        }).catch(function () {
+          console.error(arguments)
+          socket.end()
+        })
+    })
+  });
+
+}
+
+setInterval(function () {
+  
+    webServer.Words.forEach((word, index) => {
+      readRegister(word.address, index);
+    });
+  
+    webServer.Bits.forEach((bit, index) => {
+      readBits(bit.address, index);
+    });
+  
+  
+}, 500);
+
+
+exports.writeRegister = writeRegister;
+exports.writeBit = writeBit;
