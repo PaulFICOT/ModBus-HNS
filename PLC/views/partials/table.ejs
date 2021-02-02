@@ -1,0 +1,56 @@
+<div >
+  <h1><%- plc_name %> Values</h1>
+  <div id="content-main">
+    <table  class="table table-condensed table-hover table-striped bootgrid-table" width="60%" cellspacing="0">
+   <thead>
+      <tr>
+        <th>Name</th>
+        <th>Comment</th>
+        <th>Address</th>
+        <th>Value</th>
+        <th></th>
+        <th></th>
+
+      </tr>
+   </thead>
+   <tbody>
+     <!-- Print the values of each variables into a table -->
+     <% datas.forEach(function(data) { %>
+       <form action="/update" method="post">
+        <input type="hidden" name="variableName" value="<%=data.name%>">
+        <tr>
+            <td><input class="deguised-input" type="text" name="newName" value="<%=data.name%>"></td>
+            <td><input class="deguised-input" type="text" name="newComment" value="<%=data.comment%>"></td>
+            <!-- TODO: Add a %MW or %M prefix for variable -->
+            <td><input class="deguised-input" type="text" name="newAddress" value="<%=data.address%>"></td>
+            <td><input class="deguised-input" type="text" name="newValue" value="<%=data.value%>"></td>
+            
+            <!-- Buttons to update and delete a variable -->
+            <td><button class="btn btn-primary" type="submit" name="button">Update</button></td>
+          </form>
+          <form action="/delete" method="post">
+              <input type="hidden" name="variableName" value="<%=data.name%>">
+              <td><button class="btn btn-danger" id="delete-<%=data.name%>" type="submit">Delete</button></td>
+        </tr>
+
+       </form>
+
+     <% }); %>
+     <form action="/add" method="post">
+      <!-- TODO: Validation of the form -->
+       <tr>
+       <td ><input type="text" class="form-control" name="name" ></td>
+       <td ><input type="text" class="form-control" name="comment" ></td>
+       <td ><input type="text" class="form-control" name="address" ></td>
+       <td ></td>
+       <td><button class="btn btn-primary" type="submit" name="button">Add</button></td>
+       </tr>
+     </form>
+
+
+
+   </tbody>
+
+    <br class="clear">
+  </div>
+</div>
