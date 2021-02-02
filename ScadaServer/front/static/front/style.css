@@ -378,6 +378,10 @@ thead th {
     padding-right: .6em;
 }
 
+#valuetype {
+    width: 70%;
+}
+
 @media (max-width: 1024px) {
     /* Basic */
     html {

@@ -49,9 +49,17 @@
                                 {% for VALUE in VALUES %}
                                     {% if VALUE.measure.id == MEASURE.id %}
                                     <tr>
-                                        <td>{{ VALUE.value }}</td>
-                                        <td>{{ VALUE.value_type }}</td>
-                                        <td>{{ VALUE.update_time | date:"d-m-Y h:m:s" }}</td>
+                                        <td>
+                                            {{ VALUE.value }}
+                                        </td>
+                                        <td>
+                                            <div id="valuetype">
+                                                {{ VALUE.value_type }}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            {{ VALUE.update_time | date:"d-m-Y h:m:s" }}
+                                        </td>
                                     </tr>
                                     {% endif %}
                                 {% endfor %}
@@ -64,7 +72,8 @@
                 </div>
             </div>
         </div>
-        <div id="footer"></div>
+        <div id="footer">
+        </div>
     </div>
 </div>
 </body>
