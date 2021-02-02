@@ -9,6 +9,7 @@ const server = new modbus.server.TCP(netServer, {
 })
 
 
+
 server.on('connection', function (client) {
   console.log('New Connection')
 })

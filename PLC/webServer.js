@@ -19,7 +19,7 @@ app.use(bodyParser.urlencoded({
 
 
 // Conf vars
-const webServPort = 8080;
+const webServPort = 3000;
 const plc_name = "PLC_0";
 
 var Words = [{
@@ -134,10 +134,4 @@ app.post("/delete", function(req, res) {
 app.listen(webServPort);
 console.log("Server web started on port:  " + webServPort + "...");
 
-
-
-exports.app= app;
-exports.webServPort = webServPort;
-exports.plc_name = plc_name;
-exports.Words = Words;
 
