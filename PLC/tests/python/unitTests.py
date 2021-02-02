@@ -11,8 +11,9 @@ words = [123,124,10,29]
 testSuccess = []
 
 def conditionChecker(condition):
-    testSuccess.append(("success" , "fail") [condition])
+    testSuccess.append(("fail" , "success") [condition])
     print(testSuccess[-1])
+
 
 #Test of Requests
 print("----------------------------")
@@ -22,8 +23,7 @@ print("Sending a writeBit request at the address 1, value = ",bits[0])
 response = api.writeBit(bits[0],1)
 print("Response = " , response)
 #Return the number of writed coils if success
-successCondition = response == "1"
-
+successCondition = response == 1
 conditionChecker(successCondition)
 
 print("----------------------------")
@@ -33,7 +33,7 @@ print("Sending a writedBits request at the address 2, values = ", bits[1:])
 response = api.writeBits(2,bits[1:])
 print("Response = " ,response)
 #Return the number of writed coils if success
-successCondition = response == "3"
+successCondition = response == 3
 conditionChecker(successCondition)
 
 
@@ -44,7 +44,7 @@ print("Sending a readBit request at the address 1")
 response = api.readBit(1)
 print("Response = " ,response)
 #Return the coil writed previously
-successCondition = response == bits[0]
+successCondition = response == [bits[0]]
 conditionChecker(successCondition)
 
 print("----------------------------")
@@ -55,8 +55,10 @@ response = api.readBits(1,4)
 print("Response = " ,response)
 
 #Return the coils writed previously
-successCondition = response == bits
+successCondition = (response == bits)
 conditionChecker(successCondition)
+
+
 
 
 print("----------------------------")
@@ -66,7 +68,7 @@ print("Sending a writeWord request at the address 1, value = ",words[0])
 response = api.writeWord(1,words[0])
 print("Response = " ,response)
 #Return the number of writed words if success
-successCondition = response == "1"
+successCondition = response == 1
 conditionChecker(successCondition)
 
 print("----------------------------")
@@ -76,7 +78,7 @@ print("Sending a writedWords request at the address 2, values = ",words[1:])
 response = api.writeWords(2, words[1:])
 print("Response = " ,response)
 #Return the number of writed words if success
-successCondition = response == "3"
+successCondition = response == 3
 conditionChecker(successCondition)
 
 print("----------------------------")
@@ -86,7 +88,7 @@ print("Sending a readWord request at the address 1")
 response=api.readWord(1)
 print("Response = " ,response)
 #Return the word writed previously
-successCondition = response == words[0]
+successCondition = response == [words[0]]
 conditionChecker(successCondition)
 
 print("----------------------------")
