@@ -16,24 +16,23 @@
    <tbody>
      <!-- Print the values of each variables into a table -->
      <% datas.forEach(function(data) { %>
+      <tr>
        <form action="/update" method="post">
         <input type="hidden" name="variableName" value="<%=data.name%>">
-        <tr>
+        
             <td><input class="deguised-input" type="text" name="newName" value="<%=data.name%>"></td>
             <td><input class="deguised-input" type="text" name="newComment" value="<%=data.comment%>"></td>
-            <td><input class="deguised-input" type="text" name="newAddress" value="<%=data.address%>"></td>
+            <td>%MW<input class="deguised-input" type="text" name="newAddress" value="<%=data.address%>"></td>
             <td><input class="deguised-input" type="text" name="newValue" value="<%=data.value%>"></td>
             
             <!-- Buttons to update and delete a variable -->
             <td><button class="btn btn-primary" type="submit" name="button">Update</button></td>
-          </form>
+      </form>
           <form action="/delete" method="post">
               <input type="hidden" name="variableName" value="<%=data.name%>">
               <td><button class="btn btn-danger" id="delete-<%=data.name%>" type="submit">Delete</button></td>
-        </tr>
-
        </form>
-
+      </tr>
      <% }); %>
      <form action="/add" method="post">
       <!-- TODO: Validation of the form -->

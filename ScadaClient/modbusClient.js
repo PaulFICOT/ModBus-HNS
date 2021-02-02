@@ -1,40 +1,28 @@
-'use strict'
+var ModbusRTU = require("modbus-serial");
+var client = new ModbusRTU();
+const webServer = require(__dirname+"/webServer.js");
 
-const modbus = require('jsmodbus')
-const net = require('net')
-const socket = new net.Socket()
-const options = {
-  'host': '127.0.0.1',
-  'port': '8502'
-}
+ 
+// open connection to a tcp line
+client.connectTCP("127.0.0.1", { port: 8502 });
+client.setID(1);
+ 
+// read the values of 10 registers starting at address 0
+// on device number 1. and log the values to the console.
+setInterval(function() {
+  webServer.Words.forEach(word => {
+    client.readHoldingRegisters(word.address, 1, function(err, data) {
+      word.value  = data.data;
+  });
 
+  });
+  webServer.Bits.forEach(bit => {
+    client.readCoils(bit.address, 1, function(err, data) {
+      bit.value  = data.data[0];
+  });
 
-
-function readRegisters() {
-  let retour;
-  const client = new modbus.client.TCP(socket)
-
-  socket.on('connect', async function () {
-    retour = await client.readHoldingRegisters(0, 10)
-      .then(function (resp) {
-        const value = resp.response._body.valuesAsArray;
-        
-        socket.end()
-        return value;
-      }).catch(function () {
-        console.error(require('util').inspect(arguments, {
-          depth: null
-        }))
-        socket.end()
-      })
-      console.log("fin de promesse");
-    console.log(retour);
-  })
+  });
   
-  socket.on('error', console.error)
-  socket.connect(options)
-  console.log("fin de fonction : "+retour);
-}
+}, 100);
 
-readRegisters();
-exports.readRegisters = readRegisters;
+exports.writeRegister = client.writeRegister;

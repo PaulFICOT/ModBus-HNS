@@ -4,8 +4,8 @@
   "dependencies": {
     "ejs": "^3.1.5",
     "express": "^4.17.1",
-    "jsmodbus": "^4.0.5",
     "lodash": "^4.17.20",
+    "modbus-serial": "^8.0.1",
     "net": "^1.0.2"
   }
 }
