@@ -1,12 +1,10 @@
 //Imports
 const modbusServer = require(__dirname+"/modbusClient.js");
 
-
 const express = require('express');
 const app = express();
 const bodyParser = require("body-parser");
 const _ = require("lodash");
-
 
 
 
@@ -19,7 +17,7 @@ app.use(bodyParser.urlencoded({
 
 
 // Conf vars
-const webServPort = 8080;
+const webServPort = 5000;
 const plc_name = "PLC_0";
 
 var Words = [{
@@ -60,16 +58,21 @@ app.get('/', function(req, res) {
 });
 
 
-app.get('/words', function(req, res) {
+app.get('/words', async function(req, res) {
 
-  Words.forEach(function(variable){
+  Words.forEach(async function(variable){
     //TODO: make the formula for each address types
-  })
+    variable.value =  await modbusServer.readRegisters(variable.address);
+    
+    
+  }) 
+
   res.render('pages/index', {
     plc_name: plc_name +" Words",
-    datas: Words
+    datas: await Words
   });
-});
+  })
+  
 
 
 app.get('/bits', function(req, res) {
