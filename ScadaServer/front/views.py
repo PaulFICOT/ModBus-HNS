@@ -30,7 +30,6 @@ def measures(request, id):
         'PLC': plc,
         'VALUES': values,
         'MEASURES': measures,
-
     }
     return render(request, 'measures.html', context)
 

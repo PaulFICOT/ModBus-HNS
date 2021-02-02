@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <title>SCADA {{ PLC.name }} logs</title>
@@ -20,7 +20,7 @@
             {% block title %}
                 <div id="branding">
                     <h1 id="site-name">
-                        <a href="http://localhost:8000/">
+                        <a href="http://127.0.0.1:8000/">
                             Hynesim SCADA Server
                         </a>
                     </h1>
@@ -51,7 +51,7 @@
                                     <tr>
                                         <td>{{ VALUE.value }}</td>
                                         <td>{{ VALUE.value_type }}</td>
-                                        <td>{{ VALUE.update_time }}</td>
+                                        <td>{{ VALUE.update_time | date:"d-m-Y h:m:s" }}</td>
                                     </tr>
                                     {% endif %}
                                 {% endfor %}

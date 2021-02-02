@@ -353,7 +353,7 @@ thead th {
     margin: 0 0 0 20px;
     font-weight: 300;
     font-size: 11px;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
     text-transform: uppercase;
     text-align: right;
 }
@@ -368,7 +368,7 @@ thead th {
 
 /* DASHBOARD */
 .dashboard .module table th {
-    width: 100%;
+    width: 70%;
 }
 .dashboard .module table td {
     white-space: nowrap;
