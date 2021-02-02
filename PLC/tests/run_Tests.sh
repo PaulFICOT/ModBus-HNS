@@ -14,8 +14,7 @@ cd $TESTS_PATH
 
 # Go into the project directory
 cd ..
-# Install packages
-npm i
+
 
 #Run the server
 node modbusServer.js &

@@ -1,18 +1,19 @@
 {
-  "name": "node-ejs",
-  "main": "server.js",
-  "dependencies": {
-    "ejs": "^3.1.5",
-    "express": "^4.17.1",
-    "jsmodbus": "^4.0.5",
-    "lodash": "^4.17.20",
-    "net": "^1.0.2"
+  "name": "plc",
+  "version": "1.0.0",
+  "description": "Module to simulate a PLC and receive Modbus Requests",
+  "main": "modbusServer.js",
+  "directories": {
+    "test": "tests"
   },
-  "devDependencies": {
-    "eslint": "^7.19.0",
-    "eslint-config-standard": "^16.0.2",
-    "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^4.2.1"
+  "scripts": {
+    "test": "sh ./tests/run_Tests.sh",
+    "start": "node modbusServer.js"
+  },
+  "author": "Nathan FOURRIER Quentin BUGNON Sacha FOLCKE Paul FICOT",
+  "license": "ISC",
+  "dependencies": {
+    "jsmodbus": "^4.0.5",
+    "net": "^1.0.2"
   }
 }
