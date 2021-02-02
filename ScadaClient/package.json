@@ -1,8 +1,16 @@
 {
-  "name": "node-ejs",
-  "main": "webServer.js",
+  "name": "scadaclient",
+  "version": "1.0.0",
+  "description": "Modbus client wich permit to debug an PLC with modbus TCP protocol throught a web interface",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Nathan FOURRIER Quentin BUGNON Sacha FOLCKE Paul FICOT",
+  "license": "ISC",
   "dependencies": {
-    "ejs": "^3.1.5",
+    "body-parser": "^1.19.0",
     "express": "^4.17.1",
     "jsmodbus": "^4.0.5",
     "lodash": "^4.17.20",
