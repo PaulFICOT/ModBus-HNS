@@ -3,12 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>SCADA server control</title>
-    {# Load the tag library #}
     {% load bootstrap4 %}
-    {# Load CSS and JavaScript #}
     {% bootstrap_css %}
     {% bootstrap_javascript jquery='full' %}
-    {# Display django.contrib.messages as Bootstrap alerts #}
     {% bootstrap_messages %}
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'front/style.css' %}">
@@ -20,9 +17,7 @@
             {% block title %}
                 <div id="branding">
                     <h1 id="site-name">
-                        <a href="http://127.0.0.1:8000/">
-                            Hynesim SCADA Server
-                        </a>
+                        <a href="http://127.0.0.1:8000/">Hynesim SCADA Server</a>
                     </h1>
                 </div>
                 <div id="user-tools">
@@ -39,24 +34,16 @@
                             <table class="table">
                                 <thead>
                                 <tr>
-                                    <th>
-                                        Name
-                                    </th>
-                                    <th>
-                                        IP
-                                    </th>
-                                    <th>
-                                        Slave
-                                    </th>
+                                    <th>Name</th>
+                                    <th>IP</th>
+                                    <th>Slave</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 {% for PLC in PLCs %}
                                     <tr>
                                         <td>
-                                            <a href="http://127.0.0.1:8000/{{ PLC.id }}">
-                                                {{ PLC.name }}
-                                            </a>
+                                            <a href="http://127.0.0.1:8000/{{ PLC.id }}">{{ PLC.name }}</a>
                                         </td>
                                         <td>
                                             {{ PLC.ip_address }}
