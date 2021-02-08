@@ -90,8 +90,11 @@ typings/
 # Jetbrains files
 .idea/
 
+# SQLite file
 *.sqlite3
 
+# pycache directory
 ScadaServer/scada/__pycache__/
 
+# pycache files
 *.pyc

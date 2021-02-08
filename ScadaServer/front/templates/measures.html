@@ -2,10 +2,13 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>SCADA server control</title>
+    <title>SCADA {{ PLC.name }} logs</title>
+    {# Load the tag library #}
     {% load bootstrap4 %}
+    {# Load CSS and JavaScript #}
     {% bootstrap_css %}
     {% bootstrap_javascript jquery='full' %}
+    {# Display django.contrib.messages as Bootstrap alerts #}
     {% bootstrap_messages %}
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'front/style.css' %}">
@@ -17,7 +20,9 @@
             {% block title %}
                 <div id="branding">
                     <h1 id="site-name">
-                        <a href="http://127.0.0.1:8000/">Hynesim SCADA Server</a>
+                        <a href="http://127.0.0.1:8000/">
+                            Hynesim SCADA Server
+                        </a>
                     </h1>
                 </div>
                 <div id="user-tools">
@@ -29,34 +34,46 @@
             <div id="content-main">
                 <div class="app-auth module">
                     {% block content %}
-                        <h1>PLC List</h1>
-                            <div id="content-main">
+                        {% for MEASURE in MEASURES %}
+                        <h1>{{ MEASURE.name }} logs</h1>
+                        <div id="content-main">
                             <table class="table">
                                 <thead>
                                 <tr>
-                                    <th>Name</th>
-                                    <th>IP</th>
-                                    <th>Slave</th>
+                                    <th>
+                                        Value
+                                    </th>
+                                    <th>
+                                        Value type
+                                    </th>
+                                    <th>
+                                        Update time
+                                    </th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {% for PLC in PLCs %}
+                                {% for VALUE in VALUES %}
+                                    {% if VALUE.measure.id == MEASURE.id %}
                                     <tr>
                                         <td>
-                                            <a href="http://127.0.0.1:8000/{{ PLC.id }}">{{ PLC.name }}</a>
+                                            {{ VALUE.value }}
                                         </td>
                                         <td>
-                                            {{ PLC.ip_address }}
+                                            <div id="valuetype">
+                                                {{ VALUE.value_type }}
+                                            </div>
                                         </td>
                                         <td>
-                                            {{ PLC.slave_number }}
+                                            {{ VALUE.update_time | date:"d-m-Y h:m:s" }}
                                         </td>
                                     </tr>
+                                    {% endif %}
                                 {% endfor %}
                                 </tbody>
                             </table>
                             <br class="clear">
                         </div>
+                        {% endfor %}
                     {% endblock %}
                 </div>
             </div>
