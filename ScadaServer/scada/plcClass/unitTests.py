@@ -1,7 +1,7 @@
-from plcClass import *
+from ScadaServer.front.plc_class import *
 
 #Creation of a local PLC
-api = Plc("automate 1 ","localhost",1)
+api = Plc_connection("automate 1 ", "localhost", 1)
 
 # Values ARRAYS
 bits = [1,1,0,1]

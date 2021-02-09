@@ -6,7 +6,7 @@ from umodbus.client import tcp
 # Enable values to be signed (default is False).
 conf.SIGNED_VALUES = True
 
-class Plc:
+class Plc_connection:
     def __init__(self, name, ipAddr, slaveNbr):
         self.name = name
         self.ipAddr = ipAddr
@@ -27,7 +27,7 @@ class Plc:
     # Words Methods
 
     def readWord(self,address):
-        return self.readWords(address,1)
+        return self.readWords(address,1)[0]
 
     def readWords(self,address,length):
         message = tcp.read_holding_registers(self.slaveNbr, address,length)
@@ -47,7 +47,7 @@ class Plc:
     #Bits Methods
 
     def readBit(self,address):
-        return self.readBits(address,1)
+        return self.readBits(address,1)[0]
 
 
     def readBits(self, address, length):
