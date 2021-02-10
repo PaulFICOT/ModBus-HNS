@@ -93,8 +93,8 @@ typings/
 # SQLite file
 *.sqlite3
 
-# pycache directory
-ScadaServer/scada/__pycache__/
+# pycache files
+*.pyc
 
 # pycache files
 *.pyc
