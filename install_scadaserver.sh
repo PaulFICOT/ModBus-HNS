@@ -7,7 +7,8 @@ apt update
 #Git
 apt-get install git
 git clone https://github.com/PaulFICOT/ModBus-HNS
-git checkout main
+cd ModBus-HNS
+git checkout dev
 
 #enter repository
 cd ScadaServer
@@ -16,8 +17,9 @@ cd ScadaServer
 apt-get install python3.6 python3-pip
 python3 --version
 pip3 --version
-pip3 install ($cat pip_list.txt)
-python3 manage.py create superuser
+pip3 install $(cat pip_list.txt)
+python3 manage.py migrate
+python3 manage.py createsuperuser
 
 #Run
-python3 manage.py runserver
+python3 manage.py runserver 0.0.0.0:8000

@@ -7,7 +7,8 @@ apt update
 #Git
 apt-get install git
 git clone https://github.com/PaulFICOT/ModBus-HNS
-git checkout main
+cd ModBus-HNS
+git checkout dev
 
 #enter repository
 cd ScadaClient
@@ -15,7 +16,7 @@ cd ScadaClient
 #Node
 apt install nodejs npm
 nodejs --version
-npm -i
+npm i
 
 #Run
 node server.js
