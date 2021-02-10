@@ -17,7 +17,7 @@
             {% block title %}
                 <div id="branding">
                     <h1 id="site-name">
-                        <a href="http://127.0.0.1:8000/">Hynesim SCADA Server</a>
+                        <a href="./">Hynesim SCADA Server</a>
                     </h1>
                 </div>
                 <div id="user-tools">
@@ -43,7 +43,7 @@
                                 {% for PLC in PLCs %}
                                     <tr>
                                         <td>
-                                            <a href="http://127.0.0.1:8000/{{ PLC.id }}">{{ PLC.name }}</a>
+                                            <a href="./{{ PLC.id }}">{{ PLC.name }}</a>
                                         </td>
                                         <td>
                                             {{ PLC.ip_address }}
