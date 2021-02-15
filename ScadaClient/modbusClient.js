@@ -1,4 +1,6 @@
 'use strict';
+// Conf vars
+const config = require('./config');
 const path = require('path');
 const modbus = require('jsmodbus');
 const net = require('net');
@@ -6,10 +8,12 @@ const net = require('net');
 const webServer = require(path.join(__dirname, '/server.js'));
 
 const options = {
-  host: '127.0.0.1',
-  port: '8502'
+  host: config.plc.ip,
+  port: config.plc.port
 };
 
+
+// Make a modbus request
 function makeRequest (callback) {
   const socket = new net.Socket();
   const client = new modbus.client.TCP(socket);
@@ -19,6 +23,7 @@ function makeRequest (callback) {
   socket.connect(options);
 }
 
+// Read a single holding register
 function readRegister (address, wordIndex) {
   makeRequest(function (socket, client) {
     socket.on('connect', function () {
@@ -41,6 +46,7 @@ function readRegister (address, wordIndex) {
   });
 }
 
+// Read a single bit
 function readBits (address, bitIndex) {
   makeRequest(function (socket, client) {
     socket.on('connect', function () {
@@ -63,6 +69,7 @@ function readBits (address, bitIndex) {
   });
 }
 
+// Write a single register 
 function writeRegister (address, value) {
   makeRequest(function (socket, client) {
     socket.on('connect', function () {
@@ -77,6 +84,7 @@ function writeRegister (address, value) {
   });
 }
 
+// Write a single bit
 function writeBit (address, value) {
   makeRequest(function (socket, client) {
     socket.on('connect', function () {
@@ -91,6 +99,8 @@ function writeBit (address, value) {
   });
 }
 
+
+// Update the data periodically
 setInterval(function () {
   webServer.Words.forEach((word, index) => {
     readRegister(word.address, index);
@@ -99,7 +109,7 @@ setInterval(function () {
   webServer.Bits.forEach((bit, index) => {
     readBits(bit.address, index);
   });
-}, 500);
+}, config.plc.updateTime);
 
 exports.writeRegister = writeRegister;
 exports.writeBit = writeBit;

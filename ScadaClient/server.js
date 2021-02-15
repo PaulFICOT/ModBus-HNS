@@ -1,6 +1,5 @@
 // Conf vars
-const webServPort = 8080;
-const plcName = 'PLC_0';
+const config = require('./config');
 
 // Imports
 const path = require('path');
@@ -49,7 +48,7 @@ app.get('/', function (req, res) {
 
 app.get('/Words', async function (req, res) {
   res.render('pages/index', {
-    plc_name: plcName,
+    plc_name: config.plc.name,
     dataType: 'Words',
     prefix: '%MW',
     datas: Words
@@ -58,7 +57,7 @@ app.get('/Words', async function (req, res) {
 
 app.get('/Bits', function (req, res) {
   res.render('pages/index', {
-    plc_name: plcName,
+    plc_name: config.plc.name,
     dataType: 'Bits',
     prefix: '%M',
     datas: Bits
@@ -127,8 +126,8 @@ app.post('/delete/:dataType', function (req, res) {
   res.redirect('/' + dataType);
 });
 
-app.listen(webServPort);
-console.log('Server web started on port:  ' + webServPort + '...');
+app.listen(config.webServer.port);
+console.log('Server web started on port:  ' + config.webServer.port + '...');
 
 exports.Words = Words;
 exports.Bits = Bits;

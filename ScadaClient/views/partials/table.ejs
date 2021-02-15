@@ -24,11 +24,11 @@
        <form action="/update/<%-dataType%>" method="post">
         <input type="hidden" name="_uid" value="<%=data._uid%>">
             <td class="deguised-input"><%=data._uid%></td>
-            <td><input class="deguised-input" type="text" name="newName" value="<%=data.name%>"></td>
-            <td><input class="deguised-input" type="text" name="newComment" value="<%=data.comment%>"></td>
-            <td><%=prefix%></td>
-            <td><input class="deguised-input" type="text" name="newAddress" value="<%=data.address%>"></td>
-            <td><input class="deguised-input" type="text" name="newValue" value="<%=data.value%>"></td>
+            <td><input class="deguised-input" type="text" name="newName" value="<%=data.name%>" required></td>
+            <td><input class="deguised-input" type="text" name="newComment" value="<%=data.comment%>"required></td>
+            <td id="dataType"><%=prefix%></td>
+            <td><input class="deguised-input" type="text" name="newAddress" value="<%=data.address%>" required></td>
+            <td><input class="deguised-input" type="text" name="newValue" value="<%=data.value%>" required></td>
             
             <!-- Buttons to update and delete a variable -->
             <td><button class="btn btn-primary" type="submit" name="button">Update</button></td>
@@ -39,14 +39,14 @@
        </form>
       </tr>
      <% }); %>
-     <form action="/add/<%-dataType%>" method="post">
+     <form action="/add/<%-dataType%>" name="submitVar" onsubmit="return validateForm()" method="post">
       <!-- TODO: Validation of the form -->
        <tr>
       <td ></td>
-       <td ><input type="text" class="form-control" name="name" ></td>
-       <td ><input type="text" class="form-control" name="comment" ></td>
-       <td><%=prefix%></td>
-       <td ><input type="text" class="form-control" name="address" ></td>
+       <td ><input type="text" class="form-control" name="name" required></td>
+       <td ><input type="text" class="form-control" name="comment" required></td>
+       <td ><%=prefix%></td>
+       <td ><input type="text" class="form-control" name="address" required></td>
        <td ></td>
        <td><button class="btn btn-primary" type="submit" name="button">Add</button></td>
        </tr>
