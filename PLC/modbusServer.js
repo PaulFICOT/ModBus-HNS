@@ -1,4 +1,6 @@
 'use strict';
+// Conf vars
+const config = require('./config');
 // Imports
 const net = require('net');
 const modbus = require('jsmodbus');
@@ -18,6 +20,6 @@ server.on('connection', function (client) {
 // server.on('writeMultipleRegisters', function (value) {})
 
 // Port define in parameter or default is 8502
-const modbusPort = process.argv[2] || 8502;
+const modbusPort = process.argv[2] || config.port;
 console.log('Modbus server started on port ' + modbusPort + '...');
 netServer.listen(modbusPort);
