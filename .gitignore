@@ -87,5 +87,8 @@ typings/
 # DynamoDB Local files
 .dynamodb/
 
+# Vscode
+.vscode/
+
 # Jetbrains files
 .idea/
