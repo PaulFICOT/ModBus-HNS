@@ -87,5 +87,17 @@ typings/
 # DynamoDB Local files
 .dynamodb/
 
+# Vscode
+.vscode/
+
 # Jetbrains files
 .idea/
+
+# SQLite file
+*.sqlite3
+
+# pycache files
+*.pyc
+
+# pycache files
+*.pyc
