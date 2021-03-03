@@ -1,4 +1,4 @@
-'use strict';
+// 'use strict';
 // Conf vars
 const config = require('./config');
 const path = require('path');
@@ -12,104 +12,79 @@ const options = {
   port: config.plc.port
 };
 
-
 // Make a modbus request
-function makeRequest (callback) {
+async function makeRequest(callback) {
   const socket = new net.Socket();
   const client = new modbus.client.TCP(socket);
-  callback(socket, client);
-
-  socket.on('error', console.error);
-  socket.connect(options);
+  
+  return new Promise((resolve,reject) => {
+    
+    socket.connect(options, () => {resolve(callback(socket,client))});
+    socket.on('error', (err) => reject(err))
+  });
+  
 }
 
 // Read a single holding register
-function readRegister (address, wordIndex) {
-  makeRequest(function (socket, client) {
-    socket.on('connect', function () {
-      client
-        .readHoldingRegisters(address, 1)
-        .then(function (resp) {
-          const value = resp.response._body.valuesAsArray[0];
-          webServer.Words[wordIndex].value = value;
-          socket.end();
-        })
-        .catch(function () {
-          console.error(
-            require('util').inspect(arguments, {
-              depth: null
-            })
-          );
-          socket.end();
-        });
+async function readRegister(address) {
+  
+  return makeRequest((socket,client) => {
+    return client.readHoldingRegisters(address, 1)
+    .then(function (resp) {
+      const value = resp.response._body.valuesAsArray[0];
+      socket.end()
+      return  value;})
     });
-  });
-}
-
-// Read a single bit
-function readBits (address, bitIndex) {
-  makeRequest(function (socket, client) {
-    socket.on('connect', function () {
-      client
-        .readCoils(address, 1)
+    
+  } 
+  
+  
+  // Read a single bit
+  async function readBits (address, bitIndex) {
+    
+    return makeRequest((socket,client) => {
+      return client.readCoils(address, 1)
+      .then(function (resp) {
+        const value = resp.response._body.valuesAsArray[0];
+        socket.end()
+        return  value;})
+      });
+    }
+    
+    // Write a single register 
+    async function writeRegister (address, value) {
+      
+      return makeRequest((socket,client) => {
+        return client.writeSingleRegister(address, value)
         .then(function (resp) {
-          const value = resp.response._body.valuesAsArray[0];
-          webServer.Bits[bitIndex].value = value;
-          socket.end();
-        })
-        .catch(function () {
-          console.error(
-            require('util').inspect(arguments, {
-              depth: null
-            })
-          );
-          socket.end();
+          socket.end()
+          return  value;})
+          .catch(function () {
+            console.error(arguments);
+            socket.end();
+          });
         });
-    });
-  });
-}
-
-// Write a single register 
-function writeRegister (address, value) {
-  makeRequest(function (socket, client) {
-    socket.on('connect', function () {
-      client.writeSingleRegister(address, value)
-        .then(function (resp) {
-          socket.end();
-        }).catch(function () {
-          console.error(arguments);
-          socket.end();
-        });
-    });
-  });
-}
-
-// Write a single bit
-function writeBit (address, value) {
-  makeRequest(function (socket, client) {
-    socket.on('connect', function () {
-      client.writeSingleCoil(address, value)
-        .then(function (resp) {
-          socket.end();
-        }).catch(function () {
-          console.error(arguments);
-          socket.end();
-        });
-    });
-  });
-}
-
-
-// Update the data periodically
-setInterval(function () {
-  webServer.Words.forEach((word, index) => {
-    readRegister(word.address, index);
-  });
-
-  webServer.Bits.forEach((bit, index) => {
-    readBits(bit.address, index);
-  });
-}, config.plc.updateTime);
-
-exports.writeRegister = writeRegister;
-exports.writeBit = writeBit;
+        
+      }
+      
+      // Write a single bit
+      async function writeBit (address, value) {
+        return makeRequest((socket,client) => {
+          return client.writeSingleCoil(address, value)
+          .then(function (resp) {
+            socket.end()
+            return  value;})
+            .catch(function () {
+              console.error(arguments);
+              socket.end();
+            });
+          });
+          
+          
+        }
+     
+        exports.readRegister = readRegister;
+        exports.readBits = readBits;
+        exports.writeRegister = writeRegister;
+        exports.writeBit = writeBit;
+        
