@@ -47,21 +47,41 @@ app.get('/', function (req, res) {
 });
 
 app.get('/Words', async function (req, res) {
-  res.render('pages/index', {
-    plc_name: config.plc.name,
-    dataType: 'Words',
-    prefix: '%MW',
-    datas: Words
+  let promises = []
+  Words.forEach((word,index) => {
+    promises.push(modbusServer.readRegister(word.address));
+    
+    promises[index].then((value) => word.value = value);
   });
+  Promise.all(promises)
+  .then(() => {
+    res.render('pages/index', {
+      plc_name: config.plc.name,
+      dataType: 'Words',
+      prefix: '%MW',
+      datas: Words
+    });
+  })
+  
 });
 
 app.get('/Bits', function (req, res) {
-  res.render('pages/index', {
-    plc_name: config.plc.name,
-    dataType: 'Bits',
-    prefix: '%M',
-    datas: Bits
+  let promises = []
+  Bits.forEach((bit,index) => {
+    promises.push(modbusServer.readBits(bit.address));
+    
+    promises[index].then((value) => bit.value = value);
   });
+  Promise.all(promises)
+  .then(() => {
+    res.render('pages/index', {
+      plc_name: config.plc.name,
+      dataType: 'Bits',
+      prefix: '%M',
+      datas: Bits
+    });
+  })
+ 
 });
 
 // post /add route
